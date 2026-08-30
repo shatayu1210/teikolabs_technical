@@ -1,0 +1,12 @@
+{
+  "name": "teikolabs-technical",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "postCreateCommand": "make setup",
+  "forwardPorts": [8501],
+  "portsAttributes": {
+    "8501": {
+      "label": "Streamlit dashboard",
+      "onAutoForward": "openPreview"
+    }
+  }
+}
