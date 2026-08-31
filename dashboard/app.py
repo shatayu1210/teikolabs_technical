@@ -1,8 +1,13 @@
 """
 Interactive dashboard for Bob. Three tabs, one per analysis part:
 the frequency table, the responder vs non-responder comparison, and the
-baseline subset breakdown. Reads straight from cell_counts.db, so run
-load_data.py first (or just use make pipeline, which does it for you).
+baseline subset breakdown. Reads straight from cell_counts.db.
+
+Streamlit Community Cloud only runs this file directly, it has no way
+to run make pipeline first, so this builds the database itself on
+first load if it doesn't exist yet. Running it locally after make
+pipeline works exactly the same, it just skips straight past this
+since the database is already there.
 """
 
 import sys
@@ -17,6 +22,7 @@ import streamlit as st
 ROOT_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT_DIR))
 
+from load_data import load_csv
 from src.db import DEFAULT_DB_PATH
 from src.frequencies import compute_frequencies
 from src.stats_analysis import compare_responders_vs_non_responders, get_responder_comparison_data
@@ -30,11 +36,15 @@ st.title("Immune Cell Population Dashboard")
 st.caption("Loblaw Bio, miraclib trial")
 
 if not DEFAULT_DB_PATH.exists():
-    st.error(
-        "No database found yet. Run `python load_data.py` (or `make pipeline`) first, "
-        "then reload this page."
-    )
-    st.stop()
+    with st.spinner("First run, building the database from cell-count.csv..."):
+        try:
+            load_csv()
+        except FileNotFoundError:
+            st.error(
+                "cell-count.csv is missing from the repo, so the database can't be "
+                "built. Make sure the csv is committed alongside load_data.py."
+            )
+            st.stop()
 
 tab_overview, tab_stats, tab_subset = st.tabs(
     ["Cell frequencies", "Responders vs non-responders", "Baseline subset"]
