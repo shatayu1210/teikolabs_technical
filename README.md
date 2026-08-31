@@ -18,7 +18,7 @@ make clean       # deletes the database and generated output, if you want a fres
 
 If you're opening this in GitHub Codespaces, the dev container installs everything automatically when the container starts, so `make pipeline` and `make dashboard` should just work.
 
-Dashboard link (deployed): _add your Streamlit Community Cloud link here after deploying_
+Dashboard link (deployed): https://teikolabstechnical-og8tbeea86ypadwed92khe.streamlit.app
 
 ## What's in here
 
