@@ -1,0 +1,15 @@
+samples_per_project
+project,sample_count
+prj1,384
+prj3,272
+
+subjects_per_response
+response,subject_count
+no,325
+yes,331
+
+subjects_per_sex
+sex,subject_count
+F,312
+M,344
+

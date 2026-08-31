@@ -1,0 +1,1 @@
+Average B cell count, melanoma males, responders, time_from_treatment_start = 0, all sample and treatment types: 10206.15
